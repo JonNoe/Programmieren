@@ -1,6 +1,6 @@
 import time
 import datetime
-start_time=time.time()
+start_time=round(time.time(),2)
 #Startknopf gedrückt
 state = bool(input("Taster gedrückt? "))
 if (state):
@@ -13,10 +13,10 @@ if (state):
         #Lampe blinkt im 3s takt
 
         #wenn der Blinkvorgang länger als 20s andauert, stoppt das blinken und lampe geht aus
-        if (time.time() > 20): #wenn 
+        if (time.time()-start_time > 20): 
             state = True
             print("Länger als 20 sekunden an")
-end_time=time.time()
+end_time=round(time.time(),2)
 laufzeit=end_time-start_time
 print("das Programm lief %s Sekunden" % laufzeit)
 
