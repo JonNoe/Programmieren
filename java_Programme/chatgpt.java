@@ -38,5 +38,7 @@ public class chatgpt {
 
         // Draw the Christmas tree
         drawChristmasTree(height);
+        scanner.close();
     }     
+    
 }
