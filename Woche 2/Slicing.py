@@ -19,7 +19,21 @@ def name():
     print(namen)
 
 
-
-
-
+def website(websites):
+    gekürzt = slice(12,-5)
+    for seite in websites:
+        print(seite[gekürzt])
+    
 name()
+
+
+websites=['https://www.google.com/']
+weiter=True
+while (weiter):
+    webseiten=input("Geben Sie eine Webseite ein: ")
+    websites.append(webseiten)
+    mehr_websites=input("Wollen Sie noch mehr webseiten hinzufügen? ").lower()
+    if (mehr_websites != 'ja'):
+        weiter=False
+    
+website(websites)
