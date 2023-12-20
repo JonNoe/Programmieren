@@ -8,7 +8,6 @@ def name():
     for i in range(0,Zahl_Leer):
         Leerzeichen.append(voller_name.find(" ",i))
         
-    print(Leerzeichen)
     vorname=voller_name[:Leerzeichen[0]].capitalize()
     nachname=voller_name[Leerzeichen[0]+1:].capitalize()
     print(vorname)

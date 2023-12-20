@@ -25,5 +25,6 @@ print(ungerade_zahlen(von,bis))
 #print(ungerade_zahlen(von,bis)[::-1]) # reverse manuell
 
 # reverse mit befehl aber befehl geht net :(
-# rückwärts=(ungerade_zahlen(von,bis).reverse)
-# print(rückwärts)
+rückwärts=list(ungerade_zahlen(von,bis))
+rückwärts.reverse()
+print(rückwärts)
