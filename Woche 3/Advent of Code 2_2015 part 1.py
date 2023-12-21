@@ -1,10 +1,10 @@
 import os
 
 def einlesen(Endgerät):
-    if Endgerät != 'ja':
-        path = 'D:\DHBW\Programmieren\Repo\Programmieren\Woche 3\\2_2015.txt'
-    else:
+    if Endgerät == "ja":
         path = 'C:\\Users\\jonin\\Documents\\Programmieren\\Programmieren Repo\\Weekly\\Programmieren\\Woche 3\\2_2015.txt'
+    else:
+         path = 'D:\DHBW\Programmieren\Repo\Programmieren\Woche 3\\2_2015.txt'
     try:
         with open(path,'r') as file:
             werte = file.readlines()
@@ -23,15 +23,15 @@ def berechnung(lxwxh):
         w=int(w)
         h=int(h)
         #Flächenberechnung
-        lw=w*l*w
-        wh=2*w*h
-        lh=2*l*h
+        lw=l*w
+        wh=w*h
+        lh=l*h
         kleinster = min(lw,wh,lh)
-        flaeche =2*l*w+2*w*h+2*h*l
+        flaeche =2*lw+2*wh+2*lh
         Gesamtfläche += flaeche + kleinster
     
     return Gesamtfläche
             
-        
-konsole = input("Bist du am Laptop? ").lower       
+#Unterscheidung der Ablageorte zwischen meinem PC und Laptop herausfinden
+konsole = input("Bist du am Laptop? ").lower() 
 print(berechnung(einlesen(konsole)))
