@@ -39,6 +39,9 @@ def spieler_eingabe():
             return 
         try:
             Zug_Spieler = int(Zug_Spieler)
+            if feld[Zug_Spieler-1] == 'X' or feld[Zug_Spieler-1] == 'O':
+                print('Das Feld ist bereits belegt, bitte wählen Sie ein anderes Feld')
+                continue
         except ValueError:
             print('Zahl Auserhalb des zahlenbereichs 1-9')
         if Zug_Spieler > 0 and Zug_Spieler < 10:
