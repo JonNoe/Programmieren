@@ -1,4 +1,12 @@
 import random
+
+# Problem war den Vektor zum simulieren mit dem feldvektor gleichzusetzen --> hatten die selbe adresse und so hat sich auch das gespielte feld verändert
+# nicht nur das simulierte
+# Lösung: eine neue Liste erstellen, der man die selbe bestandteile gibt
+
+# Fehler mit schwachem bot:
+# er hat das Falsche feld gelesen und dann auch mit falschem Index eingetragen
+
 #Konstanten definiert
 SPIELER_ZEICHEN = 'X'
 COMPUTER_ZEICHEN = 'O'
@@ -11,6 +19,7 @@ feld = ['1','2','3',
 ursprüngliches_feld = ['1','2','3',
                        '4','5','6',
                        '7','8','9']
+aktuelles_Feld = []
 #wer spielt
 spieler_aktuell = 'Computer'
 
@@ -27,7 +36,7 @@ def feld_ausgabe(Zug_s):
     else:
         zeichen = COMPUTER_ZEICHEN
         
-    feld[Zug_s-1] = zeichen
+    feld[Zug_s] = zeichen #hier geändert -1 weg
     print(feld[0] + '|' + feld[1] + '|' + feld[2])
     print(feld[3] + '|' + feld[4] + '|' + feld[5])
     print(feld[6] + '|' + feld[7] + '|' + feld[8])
@@ -41,48 +50,51 @@ def spieler_eingabe():
             spielen = False
             return 
         try:
-            Zug_Spieler = int(Zug_Spieler)
+            Zug_Spieler = int(Zug_Spieler) -1
             if position_spielbar(Zug_Spieler):
                 print('Das Feld ist bereits belegt, bitte wählen Sie ein anderes Feld')
                 continue
         except ValueError:
             print('Zahl Auserhalb des zahlenbereichs 1-9')
-        if Zug_Spieler > 0 and Zug_Spieler < 10:
+        if Zug_Spieler >= 0 and Zug_Spieler < 9:
             return Zug_Spieler
         else: 
             print('Bitte geben Sie eine Zahl zwischen 1 und 9 ein')
 
 def position_spielbar(position):
-    if  not feld[position -1] == ursprüngliches_feld[position-1]:
+    if  not feld[position ] == ursprüngliches_feld[position]:
         return True
     return False
     
 def Computer_Zug():
-    bestScore = -1000
+    global aktuelles_Feld
+    bestScore = -800
     bestmove = 0
+
     while spieler_aktuell == 'Computer':
-        aktuelles_Feld = feld
+        for i in range(len(feld)):
+            aktuelles_Feld.append(feld[i])
+            #print(aktuelles_Feld)
         for key in range(len(feld)):
-            print(ursprüngliches_feld)
-            print(aktuelles_Feld)
-            if aktuelles_Feld[key] == ursprüngliches_feld[key]:
+            print(key)
+            if position_spielbar(key): #position_spielbar(key)
+                continue
+            else:
                 aktuelles_Feld[key] = COMPUTER_ZEICHEN
-                score = minimax(feld, False)
+                #print(aktuelles_Feld)
+                score = minimax(aktuelles_Feld, False)
                 aktuelles_Feld[key] = ursprüngliches_feld[key]
                 if score > bestScore:
                     bestScore = score
                     bestmove = key
         Computer_Zug = bestmove
-
-        if position_spielbar(Computer_Zug):
-            print('Computer will an ort spielen der belegt ist')
-            continue
-        else:
-            return Computer_Zug
+        aktuelles_Feld = []
+        feld_ausgabe(bestmove)    
+        return Computer_Zug
 
 
 
-def minimax(feld, isMaximizing):
+def minimax(feld_aktuell, isMaximizing):
     if check_wer_gewonnen(COMPUTER_ZEICHEN):
         return 1
     elif check_wer_gewonnen (SPIELER_ZEICHEN):
@@ -91,23 +103,23 @@ def minimax(feld, isMaximizing):
         return 0
     
     if isMaximizing: #maximizing
-        bestScore = -1000
-        for key in range(len(feld)):
-            if feld[key] == ursprüngliches_feld[key]:
-                feld[key] = COMPUTER_ZEICHEN
-                score = minimax(feld, False)
-                feld[key] = ursprüngliches_feld[key]
+        bestScore = -800
+        for key in range(len(feld_aktuell)):
+            if feld_aktuell[key] == ursprüngliches_feld[key]:
+                feld_aktuell[key] = COMPUTER_ZEICHEN
+                score = minimax(feld_aktuell, False)
+                feld_aktuell[key] = ursprüngliches_feld[key]
                 if score > bestScore:
                     bestScore = score
         return bestScore
     
     else: #minimizing
-        bestScore = 1000
-        for key in range(len(feld)):
-            if feld[key] == ursprüngliches_feld[key]:
-                feld[key] = SPIELER_ZEICHEN
-                score = minimax(feld,True)
-                feld[key] = ursprüngliches_feld[key]
+        bestScore = 800
+        for key in range(len(feld_aktuell)):
+            if feld_aktuell[key] == ursprüngliches_feld[key]:
+                feld_aktuell[key] = SPIELER_ZEICHEN
+                score = minimax(feld_aktuell,True)
+                feld_aktuell[key] = ursprüngliches_feld[key]
                 if score < bestScore:
                     bestScore = score
         return bestScore
@@ -172,11 +184,11 @@ def main():
         if spieler_aktuell == 'Mensch':
             Zug_spieler = spieler_eingabe()             
             feld_ausgabe(Zug_spieler)
-            print(f'Ihr Spielzug: {Zug_spieler} \n') 
+            print(f'\nIhr Spielzug: {Zug_spieler} \n') 
         else:
             Zug_Computer = Computer_Zug()
-            feld_ausgabe(Zug_Computer)
-            print(f'Der Computer hat in Feld {Zug_Computer} gespielt \n')
+            #feld_ausgabe(Zug_Computer)
+            print(f'\nDer Computer hat in Feld {Zug_Computer+1} gespielt \n')
         #print(feld)
         #hat jemand gewonnen?
         gewonnen = check_wer_gewonnen(zeichen)
