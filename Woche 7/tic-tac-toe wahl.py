@@ -79,7 +79,7 @@ def Computer_Zug():
             aktuelles_Feld.append(feld[i])
             #print(aktuelles_Feld)
         for key in range(len(feld)):
-            print(key)
+            #print(key)
             if position_spielbar(key): #position_spielbar(key)
                 continue
             else:
