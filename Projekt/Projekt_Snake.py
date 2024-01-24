@@ -70,7 +70,7 @@ Anzahl_Zellen = 20
 
 screen = pygame.display.set_mode((Zellengroesse*Anzahl_Zellen,Zellengroesse*Anzahl_Zellen)) #Legt fenstergröße fest Breite*Höhe
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 60
 
 
 SCREEN_UPDATE = pygame.USEREVENT
